@@ -1,13 +1,13 @@
-name: Create Flutter Project
+name: Build Flutter APK
 
 on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,14 +19,14 @@ jobs:
         with:
           channel: stable
 
-      - name: Create Flutter project
-        run: |
-          flutter create --project-name dmfl .
+      - name: Get dependencies
+        run: flutter pub get
 
-      - name: Commit Flutter project
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Create Flutter project"
-          git push
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: eyeba-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
