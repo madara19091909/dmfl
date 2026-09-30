@@ -96,9 +96,56 @@ class FeedContent extends StatelessWidget {
             ],
           ),
 
+          // Stories
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 110,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
+                itemCount: 8,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 62,
+                          height: 62,
+                          padding: const EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: const Color(0xFFD4AF37),
+                              width: 2,
+                            ),
+                          ),
+                          child: const CircleAvatar(
+                            child: Icon(Icons.person),
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          index == 0 ? 'قصتك' : 'مستخدم',
+                          style: const TextStyle(
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+
+          // Feed title
           const SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.fromLTRB(16, 8, 16, 12),
               child: Text(
                 'آخر المنشورات',
                 style: TextStyle(
@@ -109,6 +156,7 @@ class FeedContent extends StatelessWidget {
             ),
           ),
 
+          // Posts
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
